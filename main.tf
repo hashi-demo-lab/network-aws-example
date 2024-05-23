@@ -1,22 +1,21 @@
-## Place all your terraform resources here
-#  Locals at the top (if you are using them)
-#  Data blocks next to resources that are referencing them
-#  Reduce hard coded inputs where possible. They are used below for simplicity to show structure
-
-/* local {
-  # Local that is a map that is used for something
-  example-local {
-    key = value
-  }
+locals {
+  network_config          = yamldecode(file("${path.module}/config/${var.network_yaml_file}"))
+  network   = local.network_config.network
 }
 
-data "vault_auth_backend" "kubernetes" {
-  namespace = var.namespace
-  path      = "kubernetes"
+
+module "landingzone" {
+  source  = "app.terraform.io/tfc-demo-au/landingzone/aws"
+  version = "0.0.0"
+  
+  region = local.network.region
+  availability_zones = local.network.availability_zones
+  deployment_name = local.network.deployment_name
+  vpc_cidr = local.network.vpc_cidr
+  public_subnets = local.network.public_subnets
+  private_subnets = local.network.private_subnets
+  enable_http_access = local.network.enable_http_access
+  enable_vpc = local.network.enable_vpc
+  enable_tgw = local.network.enable_tgw
 }
 
-resource "vault_policy" "policies" {
-  namespace = var.namespace
-  name      = "name"
-  policy    = "policy"
-} */

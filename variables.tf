@@ -1,7 +1,4 @@
-## Variables file
-
-/* variable "namespace" {
-  description = "(Optional) - Namespace that will be used for the configuration"
-  type        = string
-  default     = null
-} */
+variable "network_yaml_file" {
+  type = string
+  default = "tenant1_prod_aws.yaml"
+}
