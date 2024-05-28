@@ -6,7 +6,7 @@ locals {
 
 module "landingzone" {
   source  = "app.terraform.io/tfc-demo-au/landingzone/aws"
-  version = "0.0.0"
+  version = "0.0.1"
   
   region = local.network.region
   availability_zones = local.network.availability_zones
